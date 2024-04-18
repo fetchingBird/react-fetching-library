@@ -1,3 +1,9 @@
+# 개발환경 세팅
+
+```
+yarn
+```
+
 # Vitest 실행하기 
 ### 목적 
 - jest는 vite의 플러그인 동작방식 때문에 완전히 지원하지 않고 있습니다. 따라서 Vite 기반으로 작동하는 테스팅 프레임워크 Vitest를 사용합니다. 
@@ -11,4 +17,5 @@ yarn test
 yarn test:run
 ```
 
-하이
+cp -R ./react-fetching-library/* ./output
+cp -R ./output ./react-fetching-library/
