@@ -18,11 +18,11 @@ jobs:
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
         with:
-          source-directory: "output"
-          destination-github-username: "qoqomi"
-          destination-repository-name: "react-fetching-library"
+          source-directory: 'output'
+          destination-github-username: 'qoqomi'
+          destination-repository-name: 'react-fetching-library'
           user-email: ${{ secrets.OFFICIAL_ACCOUNT_EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
