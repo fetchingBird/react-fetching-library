@@ -9,7 +9,15 @@ module.exports = {
     'prettier',
     'prettier/prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
+  ignorePatterns: [
+    'dist',
+    '.eslintrc.cjs',
+    '.lintstagedrc.cjs',
+    'commitlint.config.cjs',
+    'jest.config.js',
+    'vite.config.js',
+    'vitest.setup.js',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
