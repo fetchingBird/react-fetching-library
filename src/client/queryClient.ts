@@ -7,7 +7,6 @@ export class QueryClient {
   mountCount: number;
 
   constructor(config: QueryClientConfig) {
-    // config 값을 받아서 사용
     this.queryCache = config.queryCache; // 초기값
     this.queryDefault = new Map();
     this.mountCount = 0;
@@ -19,9 +18,15 @@ export class QueryClient {
 
     if (this.mountCount !== 1) return;
   }
+
   unmount(): void {
     // unmount 시 구독해지
     this.mountCount -= 1;
     if (this.mountCount !== 0) return;
+  }
+
+  clear(): void {
+    // 캐시에 저장되어 있는 모든 데이터 제거
+    this.queryCache.clear();
   }
 }
