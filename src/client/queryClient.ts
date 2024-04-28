@@ -3,12 +3,12 @@ interface QueryClientConfig {
 }
 export class QueryClient {
   queryCache: any;
-  queryDefault: Map<string, any>;
+  queryDefaults: Map<string, any>;
   mountCount: number;
 
   constructor(config: QueryClientConfig) {
-    this.queryCache = config.queryCache; // 초기값
-    this.queryDefault = new Map();
+    this.queryCache = config.queryCache;
+    this.queryDefaults = new Map();
     this.mountCount = 0;
   }
 
