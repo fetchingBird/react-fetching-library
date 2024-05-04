@@ -18,6 +18,8 @@ export const useQuery = ({
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
 
+  const [isError, setIsError] = useState(false);
+
   //1. 캐싱데이터 저장 로직 필요
   // cheche store에는 키를 저장하고 오늘 날짜를 입력한다.
   // 서버에서 받아온 데이터는 cacheStore 저장
@@ -35,12 +37,12 @@ export const useQuery = ({
     }
     try {
       setIsPending(true);
-      const { data } = await queryFn?.();
-
+      const data = await queryFn?.();
       cacheStore.set(queryKey, { data, createAt: Date.now() });
       setData(data);
     } catch (e) {
       setError(e);
+      setIsError(true);
     } finally {
       setIsPending(false);
     }
@@ -50,5 +52,5 @@ export const useQuery = ({
     fetchWithCache();
   }, []);
 
-  return { data, isPending, error };
+  return { data, isPending, error, isError };
 };
