@@ -1,24 +1,25 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useCacheStore } from '../context/CacheStoreProvider';
 
 interface UseQueryArgs {
   queryKey: string[];
-  queryFn?: () => void;
+  queryFn: () => void;
   cacheTime?: number;
 }
 
 const initialCacheTime = 5 * 60 * 1000;
-const cacheStore = new Map();
 
 export const useQuery = ({
   queryKey,
   queryFn,
   cacheTime = initialCacheTime,
 }: UseQueryArgs) => {
-  const [data, setData] = useState(null);
+  const { cacheStore } = useCacheStore();
+  const [initData, setInitData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
 
-  //1. 캐싱데이터 저장 로직 필요
+  // 1. 캐싱데이터 저장 로직 필요
   // cheche store에는 키를 저장하고 오늘 날짜를 입력한다.
   // 서버에서 받아온 데이터는 cacheStore 저장
   // data : 서버에서 받아온 데이터, createAt: 현재시간
@@ -29,26 +30,27 @@ export const useQuery = ({
     if (cacheStore.has(queryKey)) {
       const cache = cacheStore.get(queryKey);
       if (Date.now() - cache.createAt < cacheTime) {
-        setData(cache.data);
+        setInitData(cache.data);
         return;
       }
     }
     try {
       setIsPending(true);
-      const { data } = await queryFn?.();
+      const { data } = await queryFn();
 
       cacheStore.set(queryKey, { data, createAt: Date.now() });
-      setData(data);
+      setInitData(data);
     } catch (e) {
       setError(e);
     } finally {
       setIsPending(false);
     }
-  }, [cacheTime, queryFn, queryKey]);
+  }, [cacheStore, cacheTime, queryFn, queryKey]);
 
   useEffect(() => {
     fetchWithCache();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { data, isPending, error };
+  return { initData, isPending, error };
 };
