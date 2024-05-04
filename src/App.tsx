@@ -14,12 +14,19 @@ export default function App() {
 }
 
 function Example() {
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data, isError } = useQuery({
     queryKey: ['repoData'],
-    queryFn: () =>
-      fetch('https://api.github.com/repos/TanStack/query').then((res) => {
-        res.json();
-      }),
+    queryFn: async () => {
+      const response = await fetch(
+        'https://jsonplaceholder.typicode.com/todos/1'
+      ).then((response) =>
+        response.json().then((result) => {
+          return result;
+        })
+      );
+
+      return response;
+    },
   });
 
   if (isPending) return 'Loading...';
