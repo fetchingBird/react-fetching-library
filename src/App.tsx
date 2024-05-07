@@ -6,9 +6,11 @@ function Example() {
   const { isPending, error } = useQuery({
     queryKey: ['repoData'],
     queryFn: () =>
-      fetch('https://api.github.com/repos/TanStack/query').then((res) => {
-        res.json();
-      }),
+      fetch('https://jsonplaceholder.typicode.com/todos/1')
+        .then((res) => res.json())
+        .then((json) => {
+          return json;
+        }),
   });
 
   if (isPending) return 'Loading...';
