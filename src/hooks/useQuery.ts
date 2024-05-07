@@ -33,8 +33,7 @@ export const useQuery = ({
     try {
       setIsPending(true);
 
-      const { data } = await queryFn();
-
+      const data = await queryFn();
       cacheStore.set(queryKey, { data, createAt: Date.now() });
 
       setInitData(data);
