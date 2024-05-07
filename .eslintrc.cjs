@@ -30,5 +30,7 @@ module.exports = {
     ],
     'react/react-in-jsx-scope': 'off',
     'import/prefer-default-export': 'off',
+    'no-useless-return': 'off', //return 시 에러나지 않게 변경
+    '@typescript-eslint/no-explicit-any': 'off', // any타입 수용하게 변경 (추후 삭제해야함)
   },
 };
