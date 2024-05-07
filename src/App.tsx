@@ -1,10 +1,6 @@
 import './App.css';
-import { QueryClient } from './client/queryClient';
 import { CacheStoreProvider } from './context/CacheStoreProvider';
-import { QueryClientProvider } from './context/QueryClientProvider';
 import { useQuery } from './hooks/useQuery';
-
-const queryClient = new QueryClient();
 
 function Example() {
   const { isPending, error } = useQuery({
@@ -32,10 +28,8 @@ function Example() {
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <CacheStoreProvider>
-        <Example />
-      </CacheStoreProvider>
-    </QueryClientProvider>
+    <CacheStoreProvider>
+      <Example />
+    </CacheStoreProvider>
   );
 }
