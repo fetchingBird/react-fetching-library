@@ -9,6 +9,8 @@ interface UseQueryArgs {
 
 const initialCacheTime = 5 * 60 * 1000;
 
+// TODO: refetch() 함수 추가
+
 export const useQuery = ({
   queryKey,
   queryFn,
