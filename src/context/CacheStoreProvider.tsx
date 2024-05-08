@@ -1,4 +1,4 @@
-import React, {
+import {
   PropsWithChildren,
   createContext,
   useContext,
@@ -11,7 +11,7 @@ interface CacheEmpty {
   createAt: number;
 }
 interface CacheStoreContextProviderProps {
-  cacheStore: Map<string[], CacheEmpty>; // cacheStore의 타입을 Map<any, any>로 지정
+  cacheStore: Map<string[], CacheEmpty>;
 }
 
 const CacheStoreContext = createContext<CacheStoreContextProviderProps>({
@@ -22,7 +22,7 @@ export function CacheStoreProvider({ children }: PropsWithChildren) {
   const [cacheStore] = useState(new Map());
 
   const value = useMemo(() => {
-    return { cacheStore }; // 객체 형태로 반환
+    return { cacheStore };
   }, [cacheStore]);
 
   return (
