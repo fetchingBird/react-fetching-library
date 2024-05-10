@@ -1,9 +1,10 @@
 import './App.css';
 import { CacheStoreProvider } from './context/CacheStoreProvider';
+import { useMutation } from './hooks/useMutation';
 import { useQuery } from './hooks/useQuery';
 
 function Example() {
-  const { isPending, error } = useQuery({
+  const { isPending: isLoading, error } = useQuery({
     queryKey: ['repoData'],
     queryFn: () =>
       fetch('https://jsonplaceholder.typicode.com/todos/1')
@@ -13,7 +14,16 @@ function Example() {
         }),
   });
 
-  if (isPending) return 'Loading...';
+  const { mutate, mutateAsync, isError, isSuccess } = useMutation({
+    mutationFn: () => {
+      'https://jsonplaceholder.typicode.com/todos/1';
+    },
+    onSuccess: (response) => {
+      return response;
+    },
+  });
+
+  if (isLoading) return 'Loading...';
 
   if (error) return `An error has occurred: ${error.message}`;
 
