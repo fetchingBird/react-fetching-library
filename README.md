@@ -24,6 +24,6 @@ export const UsersListContainer = () => {
     queryFn: () => queryFn,
   });
 
-  return <UsersList loading={loading} error={error} users={payload} onReload={query} />;
+  return <UsersList loading={loading} error={error} user={data} />;
 };
 ```
