@@ -1,24 +1,25 @@
-# 개발환경 세팅
+# react-fetching-library
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+✅ 불러온 데이터를 다시 불러오지 않도록 **캐시에 저장** <br/>
+✅ 캐시 스토어가 **상태관리 스토어로서 동작** <br/>
+✅ 캐시를 invalidation <br/>
+✅ 캐시의 키를 이용해서 같은 요청에 대해 다르게 저장 <br/>
+
+## Short example of use
+
+```js
+import { useQuery } from 'react-fetching-library';
+
+const fetchUsersList = {
+  method: 'GET',
+  endpoint: '/users',
+};
+
+export const UsersListContainer = () => {
+  const { loading, payload, error, query } = useQuery(fetchUsersList);
+
+  return <UsersList loading={loading} error={error} users={payload} onReload={query} />;
+};
 ```
-yarn
-```
-
-# 배포 가이드 
-
-
-# Vitest 실행하기 
-### 목적 
-- jest는 vite의 플러그인 동작방식 때문에 완전히 지원하지 않고 있습니다. 따라서 Vite 기반으로 작동하는 테스팅 프레임워크 Vitest를 사용합니다. 
-### 사용방법
-- `test`스크립트는 Vitest를 감시(watch)모드로 실행해줍니다. 
-```shell
-yarn test
-```
-- `test:run`스크립트는 Vitest를 일회성으로 실행해줍니다. 
-```shell
-yarn test:run
-```
-
-cp -R ./react-fetching-library/* ./output
-cp -R ./output ./react-fetching-library/
