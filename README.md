@@ -19,7 +19,7 @@ export const UsersListContainer = () => {
     return 'https://example.com';
   };
 
-  const { isPending: isLoading, error } = useQuery({
+  const { data, isPending, error } = useQuery({
     queryKey: ['repoData'],
     queryFn: () => queryFn,
   });
