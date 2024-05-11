@@ -10,15 +10,19 @@
 ## Short example of use
 
 ```js
-import { useQuery } from 'react-fetching-library';
+import { useQuery } from '@react-fetching-library';
 
-const fetchUsersList = {
-  method: 'GET',
-  endpoint: '/users',
-};
 
 export const UsersListContainer = () => {
-  const { loading, payload, error, query } = useQuery(fetchUsersList);
+
+  const queryFn = () => {
+    return 'https://example.com';
+  };
+
+  const { isPending: isLoading, error } = useQuery({
+    queryKey: ['repoData'],
+    queryFn: () => queryFn,
+  });
 
   return <UsersList loading={loading} error={error} users={payload} onReload={query} />;
 };
