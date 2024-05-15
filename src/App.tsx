@@ -3,7 +3,7 @@ import { CacheStoreProvider } from './context/CacheStoreProvider';
 import { useQuery } from './hooks/useQuery';
 
 function Example() {
-  const { isPending, error } = useQuery({
+  const { isPending, error, initData } = useQuery({
     queryKey: ['repoData'],
     queryFn: () =>
       fetch('https://jsonplaceholder.typicode.com/todos/1')
@@ -17,6 +17,7 @@ function Example() {
 
   if (error) return `An error has occurred: ${error.message}`;
 
+  console.log('data', initData);
   return (
     <div>
       {/* <h1>{data.name}</h1>
