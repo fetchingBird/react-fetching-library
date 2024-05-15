@@ -40,6 +40,7 @@ export const useQuery = ({
   const fetchWithCache = useCallback(async () => {
     if (cacheStore.has(queryKey)) {
       const cache = cacheStore.get(queryKey);
+
       if (cache) {
         if (Date.now() - cache.createAt < cacheTime) {
           setInitData(cache.data);
@@ -51,14 +52,19 @@ export const useQuery = ({
       setIsPending(true);
 
       const data = await queryFn();
+      if (!data.ok) {
+        if (data.status === 404 || data.status === 500) {
+          setFailureCount(failureCount + 1);
+        }
+        // 실패한 경우
+        setIsError(true);
+        setError(data.statusText);
+      }
       cacheStore.set(queryKey, { data, createAt: Date.now() });
 
       setInitData(data);
     } catch (e: unknown) {
       // TODO: type 변경
-      setError(e);
-      setIsError(true);
-      setFailureCount(failureCount + 1);
 
       if (shouldRetry(e)) {
         setTimeout(fetchWithCache, Math.min(1000 * 2 ** failureCount, 30000)); // Exponential back-off
