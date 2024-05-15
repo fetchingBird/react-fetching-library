@@ -1,5 +1,9 @@
 # react-fetching-library
 
+<p align="center">
+<img src="https://github.com/fetchingBird/react-fetching-library/assets/82128525/c93682bb-3231-4b77-9e29-d0114fd079a8.png" width="400" height="400"/>
+</p>
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ✅ 불러온 데이터를 다시 불러오지 않도록 **캐시에 저장** <br/>
