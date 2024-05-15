@@ -5,12 +5,12 @@ import { useQuery } from './hooks/useQuery';
 function Example() {
   const { isPending, error, initData } = useQuery({
     queryKey: ['repoData'],
-    queryFn: () =>
-      fetch('https://jsonplaceholder.typicode.com/todos/1')
-        .then((res) => res.json())
-        .then((json) => {
-          return json;
-        }),
+    queryFn: async () => {
+      const result = fetch(
+        `https://jsonplaceholder.typicode.com/todoㅇㅇㅇs/1`
+      );
+      return result;
+    },
   });
 
   if (isPending) return 'Loading...';
