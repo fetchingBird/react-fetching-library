@@ -1,30 +1,32 @@
 import './App.css';
+import axios from 'axios';
 import { CacheStoreProvider } from './context/CacheStoreProvider';
 import { useQuery } from './hooks/useQuery';
 
+const EXAMPLE_URL = 'https://jsonplaceholder.typicode.com/todos/1';
+
+const QUERY_KEY = ['getData'];
+
 function Example() {
   const { isPending, error, initData } = useQuery({
-    queryKey: ['repoData'],
+    queryKey: QUERY_KEY,
     queryFn: async () => {
-      const result = fetch(
-        `https://jsonplaceholder.typicode.com/todoㅇㅇㅇs/1`
-      );
+      const result = await axios.get(EXAMPLE_URL);
       return result;
     },
   });
 
-  if (isPending) return 'Loading...';
+  const data = initData;
 
-  if (error) return `An error has occurred: ${error.message}`;
+  if (error) return `An error has occurred: ${error}`;
 
-  console.log('data', initData);
   return (
     <div>
-      {/* <h1>{data.name}</h1>
-      <p>{data.description}</p>
-      <strong>👀 {data.subscribers_count}</strong>{' '}
-      <strong>✨ {data.stargazers_count}</strong>{' '}
-      <strong>🍴 {data.forks_count}</strong> */}
+      {isPending ? (
+        <strong>Loading...</strong>
+      ) : (
+        <strong>🍴 {data?.data.title}</strong>
+      )}
     </div>
   );
 }
