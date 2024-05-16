@@ -33,5 +33,6 @@ module.exports = {
     'no-useless-return': 'off', //return 시 에러나지 않게 변경
     '@typescript-eslint/no-explicit-any': 'off', // any타입 수용하게 변경 (추후 삭제해야함)
     'react-refresh/only-export-components': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
   },
 };
