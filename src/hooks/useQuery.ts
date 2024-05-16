@@ -1,39 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { CacheDataArgs, useCacheStore } from '../context/CacheStoreProvider';
-
-const isAxiosError = <ResponseDataType>(
-  error: unknown
-): error is AxiosError<ResponseDataType> => {
-  return axios.isAxiosError(error);
-};
-
-const hasArrayKey = (map: Map<string[], CacheDataArgs>, keyArray: string[]) => {
-  return Array.from(map.keys()).some(
-    (key) =>
-      Array.isArray(key) &&
-      key.length === keyArray.length &&
-      key.every((val, index) => val === keyArray[index])
-  );
-};
-
-const getLatestDataFromMap = (
-  map: Map<string[], CacheDataArgs>,
-  keyArray: string[]
-): CacheDataArgs | null => {
-  return Array.from(map.entries()).reduce((latest, [key, value]) => {
-    if (
-      Array.isArray(key) &&
-      key.length === keyArray.length &&
-      key.every((val, index) => val === keyArray[index])
-    ) {
-      if (!latest || value.createAt > latest.createAt) {
-        return value;
-      }
-    }
-    return latest;
-  }, null as CacheDataArgs | null);
-};
+import axios, { AxiosError, AxiosResponse, isAxiosError } from 'axios';
+import { useCacheStore } from '../context/CacheStoreProvider';
+import { hasArrayKey } from '../util/hasArrayKey';
+import { getLatestDataFromMap } from '../util/getLatestDataFormMap';
 
 interface UseQueryArgs {
   queryKey: string[];
@@ -85,6 +54,10 @@ export const useQuery = ({
       setIsPending(true);
 
       const data = await queryFn();
+      if (!data.ok) {
+        setError(data.type);
+        setIsError(true);
+      }
       cacheStore.set(queryKey, { data, createAt: Date.now() });
 
       setInitData(data);
