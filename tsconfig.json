@@ -18,8 +18,13 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   },
+  "rules": {
+        "@typescript-eslint/no-unused-vars": "off"
+    },
+
   "include": ["src", ".eslintrc.cjs", "commitlint.config.cjs"],
   "references": [{ "path": "./tsconfig.node.json" }]
+
 }
