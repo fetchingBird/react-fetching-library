@@ -4,21 +4,28 @@ import { CacheStoreProvider } from './context/CacheStoreProvider';
 import { useQuery } from './hooks/useQuery';
 
 const EXAMPLE_URL = 'https://jsonplaceholder.typicode.com/todos/1';
+// const EXAMPLE_ERROR_URL = 'https://jsonplaceholder.typicodoode.com/todos/1';
 
-const QUERY_KEY = ['getData'];
+const QUERY_KEY = ['getData1'];
 
 function Example() {
-  const { isPending, error, initData } = useQuery({
+  const { isPending, error, initData, isError } = useQuery({
     queryKey: QUERY_KEY,
     queryFn: async () => {
       const result = await axios.get(EXAMPLE_URL);
       return result;
     },
   });
-
   const data = initData;
 
-  if (error) return `An error has occurred: ${error}`;
+  if (isError)
+    return (
+      <div>
+        <strong>⛔️ error</strong>
+        <strong>{error as string}</strong>
+        <br />
+      </div>
+    );
 
   return (
     <div>
