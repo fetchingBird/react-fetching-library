@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import axios, { AxiosError, AxiosResponse, isAxiosError } from 'axios';
+import { AxiosResponse, isAxiosError } from 'axios';
 import { useCacheStore } from '../context/CacheStoreProvider';
 import { hasArrayKey } from '../util/hasArrayKey';
 import { getLatestDataFromMap } from '../util/getLatestDataFormMap';
@@ -20,10 +20,10 @@ export const useQuery = ({
   retry = 0,
 }: UseQueryArgs) => {
   const { cacheStore } = useCacheStore();
-
+  console.log('🏛cacheStore', cacheStore);
   const [initData, setInitData] = useState<AxiosResponse | null>(null);
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<null | unknown>(null);
+  const [error, setError] = useState<null | unknown | string>(null);
   const [isError, setIsError] = useState(false);
 
   const [failureCount, setFailureCount] = useState(0);
@@ -54,10 +54,6 @@ export const useQuery = ({
       setIsPending(true);
 
       const data = await queryFn();
-      if (!data.ok) {
-        setError(data.type);
-        setIsError(true);
-      }
       cacheStore.set(queryKey, { data, createAt: Date.now() });
 
       setInitData(data);

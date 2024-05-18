@@ -4,10 +4,12 @@ interface QueryClientConfig {
 }
 export class QueryClient {
   queryCache: any;
+
   queryDefaults: Map<string, any>;
+
   mountCount: number;
 
-  constructor(config: QueryClientConfig = {}) {
+  constructor(config: QueryClientConfig) {
     this.queryCache = config.queryCache;
     this.queryDefaults = new Map();
     this.mountCount = 0;
